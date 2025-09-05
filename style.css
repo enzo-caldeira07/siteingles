@@ -1,0 +1,52 @@
+ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e8f5e9, #fff8e1); /* verde claro + bege */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .quiz-container {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    width: 420px;
+    text-align: center;
+    border: 3px solid #4caf50; /* verde natureza */
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #2e7d32; /* verde mais escuro */
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #8d6e63; /* marrom terroso */
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  
+  .btn:hover {
+    background: #6d4c41; /* marrom mais escuro */
+  }
+  
+  #next-btn {
+    margin-top: 15px;
+    display: none;
+    background: #388e3c; /* verde médio */
+  }
+  
+  #next-btn:hover {
+    background: #1b5e20; /* verde escuro */
+  }

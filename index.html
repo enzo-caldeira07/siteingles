@@ -1,0 +1,204 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Environmental Conditionals Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #fff8e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .quiz-container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      width: 480px;
+      text-align: center;
+      border: 3px solid #4caf50;
+      position: relative;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #8d6e63;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #6d4c41;
+    }
+    .btn.correct {
+      background: #388e3c !important;
+    }
+    .btn.wrong {
+      background: #d32f2f !important;
+    }
+    #next-btn {
+      margin-top: 15px;
+      display: none;
+      background: #388e3c;
+    }
+    #next-btn:hover {
+      background: #1b5e20;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      display: none;
+    }
+    #feedback.correct {
+      color: #2e7d32;
+    }
+    #feedback.wrong {
+      color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h2 id="question">Question appears here</h2>
+    <div id="answer-buttons"></div>
+    <p id="feedback"></p>
+    <button id="next-btn" class="btn">Next</button>
+  </div>
+
+  <script>
+    const conditionals = [
+      "Zero Conditional",
+      "First Conditional",
+      "Second Conditional",
+      "Third Conditional"
+    ];
+
+    const questions = [
+      {
+        question: "If we cut down too many trees, the air gets polluted. This phrase is a…?",
+        correct: "Zero Conditional"
+      },
+      {
+        question: "If people recycle more, we will reduce waste. This phrase is a…?",
+        correct: "First Conditional"
+      },
+      {
+        question: "If I were the president, I would invest in renewable energy. This phrase is a…?",
+        correct: "Second Conditional"
+      },
+      {
+        question: "If we had protected the forests earlier, many species would not have disappeared. This phrase is a…?",
+        correct: "Third Conditional"
+      }
+    ];
+
+    const questionElement = document.getElementById("question");
+    const answerButtons = document.getElementById("answer-buttons");
+    const nextButton = document.getElementById("next-btn");
+    const feedbackElement = document.getElementById("feedback");
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      nextButton.innerHTML = "Next";
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      let currentQuestion = questions[currentQuestionIndex];
+      questionElement.innerHTML = currentQuestion.question;
+
+      conditionals.forEach(option => {
+        const button = document.createElement("button");
+        button.innerHTML = option;
+        button.classList.add("btn");
+        button.addEventListener("click", () => selectAnswer(button, option, currentQuestion.correct));
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function resetState() {
+      nextButton.style.display = "none";
+      feedbackElement.style.display = "none";
+      feedbackElement.innerHTML = "";
+      feedbackElement.className = "";
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
+    }
+
+    function selectAnswer(button, selected, correct) {
+      const buttons = answerButtons.querySelectorAll(".btn");
+      buttons.forEach(b => {
+        b.disabled = true;
+        if (b.innerHTML === correct) {
+          b.classList.add("correct");
+        } else if (b === button && selected !== correct) {
+          b.classList.add("wrong");
+        }
+      });
+
+      if (selected === correct) {
+        score++;
+        feedbackElement.innerHTML = "🌱 Great job! You got it right! Keep protecting our planet. 💚";
+        feedbackElement.classList.add("correct");
+      } else {
+        feedbackElement.innerHTML = `🔥 Oops! Not this time... The correct answer is: <b>${correct}</b>.`;
+        feedbackElement.classList.add("wrong");
+      }
+
+      feedbackElement.style.display = "block";
+      nextButton.style.display = "block";
+    }
+
+    function showScore() {
+      resetState();
+      questionElement.innerHTML = `You got ${score} out of ${questions.length}! 🌍✨`;
+      feedbackElement.style.display = "block";
+      feedbackElement.classList.add("correct");
+      feedbackElement.innerHTML = "Thanks for playing! Together we can fight global warming. 🌱🔥";
+      nextButton.innerHTML = "Restart";
+      nextButton.style.display = "block";
+    }
+
+    function handleNextButton() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    nextButton.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length) {
+        handleNextButton();
+      } else {
+        startQuiz();
+      }
+    });
+
+    startQuiz();
+  </script>
+</body>
+</html>
